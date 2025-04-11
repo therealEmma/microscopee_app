@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 import sqlite3
 
 # Custom function to calculate the real-life size
@@ -45,41 +45,7 @@ def index():
         except Exception as e:
             error = str(e)
 
-    return render_template_string(""" 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Specimen Analyzer</title>
-        <style>
-            /* Your styling here */
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h2>Specimen Analyzer</h2>
-            <form method="POST">
-                <label for="username">Your Name</label>
-                <input type="text" name="username" id="username" required>
-
-                <label for="microscope_size">Microscope Image Size (mm)</label>
-                <input type="number" step="any" name="microscope_size" id="microscope_size" required>
-
-                <label for="magnification">Magnification Level</label>
-                <input type="number" step="any" name="magnification" id="magnification" required>
-
-                <button type="submit">Calculate Actual Size</button>
-            </form>
-
-            {% if result %}
-            <div class="result">
-                <strong>Result:</strong> The actual size is <strong>{{ result }} mm</strong>.
-            </div>
-            {% endif %}
-        </div>
-    </body>
-    </html>
-    """, result=result, error=error)
+    return render_template("index.html", result=result, error=error)
 
 if __name__ == "__main__":
     app.run(debug=True)
